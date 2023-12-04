@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bandas de J-Rock con API</title>
+  
+  <!-- Enlaces a las hojas de estilo -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Bandas de J-Rock</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="consultas.html">Consultas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="altas.html">Altas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="actualizacion.html">Actualización</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="baja.html">Baja</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Título y botón para consultar registros -->
+    <h2 class="form-title">Consulta de Registros</h2>
+    <button id="consultarBtn" class="btn btn-primary">Consultar Registros</button>
+  
+    <!-- Tabla para mostrar registros -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID Banda</th>
+            <th>Nombre Banda</th>
+            <th>Año Formación</th>
+            <th>Integrantes</th>
+            <th>Canción popular</th>
+            <th>Género</th>
+            <th>Subgénero</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTabla">
+          <!-- Aquí se mostrarán los registros -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Script JavaScript para interactuar con la API y mostrar datos en la tabla -->
+    <script>
+      const consultarBtn = document.getElementById('consultarBtn');
+      consultarBtn.addEventListener('click', async () => {
+        try {
+          const response = await fetch('/consultar'); // Ruta de la API para consultar registros
+          const data = await response.json();
+          
+          const cuerpoTabla = document.getElementById('cuerpoTabla');
+          cuerpoTabla.innerHTML = ''; // Limpiar tabla antes de mostrar nuevos datos
+          
+          // Iterar sobre los registros y mostrarlos en la tabla
+          data.forEach(registro => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${registro.id_banda}</td>
+              <td>${registro.nombreBanda}</td>
+              <td>${registro.anoFormacion}</td>
+              <td>${registro.integrantes}</td>
+              <td>${registro.cancionPopular}</td>
+              <td>${registro.genero}</td>
+              <td>${registro.subgenero}</td>
+            `;
+            cuerpoTabla.appendChild(row);
+          });
+        } catch (error) {
+          console.error('Error al consultar los registros:', error);
+        }
+      });
+    </script>
+
+    <!-- Enlace al script de Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+</body>
+</html>

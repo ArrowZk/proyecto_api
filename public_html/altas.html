@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bandas de J-Rock con API</title>
+  
+  <!-- Enlaces a las hojas de estilo -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <!-- Barra de navegación -->
+  <nav id="main-navbar" class="navbar navbar-expand-lg bg-primary">
+    <!-- Contenedor -->
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Bandas de J-Rock</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Elementos de la barra de navegación -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="consultas.html">Consultas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="altas.html">Altas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="actualizacion.html">Actualización</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="baja.html">Baja</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    
+  <div class="container mt-4">
+    <h2 class="form-title">Alta de Nuevo Registro</h2>
+
+    <!-- Alertas de éxito y error -->
+    <div class="alert alert-success d-none" role="alert" id="alertSuccess">
+      ¡Registro creado exitosamente!
+    </div>
+  
+    <div class="alert alert-danger d-none" role="alert" id="alertError">
+      Error al crear el registro. Por favor, intenta nuevamente.
+    </div>
+
+    <!-- Formulario para crear nuevo registro -->
+    <div class="container-form">
+      <form id="formularioRegistro">
+        <div class="mb-3">
+          <label for="id_banda" class="form-label">ID de Banda:</label>
+          <input type="number" class="form-control" id="id_banda" name="id_banda">
+        </div>
+  
+        <div class="mb-3">
+          <label for="nombreBanda" class="form-label">Nombre de la Banda:</label>
+          <input type="text" class="form-control" id="nombreBanda" name="nombreBanda">
+        </div>
+  
+        <div class="mb-3">
+          <label for="anoFormacion" class="form-label">Año de Formación:</label>
+          <input type="number" class="form-control" id="anoFormacion" name="anoFormacion">
+        </div>
+  
+        <div class="mb-3">
+          <label for="integrantes" class="form-label">Integrantes:</label>
+          <input type="text" class="form-control" id="integrantes" name="integrantes">
+        </div>
+
+        <div class="mb-3">
+          <label for="cancionPopular" class="form-label">Canción Popular:</label>
+          <input type="text" class="form-control" id="cancionPopular" name="cancionPopular">
+        </div>
+
+        <div class="mb-3">
+          <label for="genero" class="form-label">Genero:</label>
+          <input type="text" class="form-control" id="genero" name="genero">
+        </div>
+
+        <div class="mb-3">
+          <label for="subgenero" class="form-label">Subgenero:</label>
+          <input type="text" class="form-control" id="subgenero" name="subgenero">
+        </div>
+        <!-- Agregar más campos según los atributos que necesites para crear el registro -->
+  
+        <button type="submit" class="btn btn-primary">Crear Registro</button>
+      </form>
+    </div>
+  </div>
+    
+  <!-- JavaScript de Bootstrap (si es necesario) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script JavaScript para el formulario -->
+  <script>
+    // Obtener el formulario y los elementos de alerta
+    const formularioRegistro = document.getElementById('formularioRegistro');
+    const alertSuccess = document.getElementById('alertSuccess');
+    const alertError = document.getElementById('alertError');
+  
+    // Agregar evento de envío al formulario
+    formularioRegistro.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Evitar el comportamiento predeterminado de envío del formulario
+  
+      // Obtener valores de los campos del formulario
+      const idBanda = document.getElementById('id_banda').value;
+      const nombreBanda = document.getElementById('nombreBanda').value;
+      const anoFormacion = document.getElementById('anoFormacion').value;
+      const integrantesInput = document.getElementById('integrantes').value;
+      // Dividir la cadena por espacios y comas usando una expresión regular
+      const integrantes = integrantesInput.split(/\s|,/);
+      const cancionPopular = document.getElementById('cancionPopular').value;
+      const genero = document.getElementById('genero').value;
+      const subgenero = document.getElementById('subgenero').value;
+      // Obtener otros valores del formulario, si los hay
+  
+      // Expresión regular para verificar si idBanda contiene solo números
+      const soloNumeros = /^\d+$/;
+      // Validar los campos
+      const idValid = idBanda !== '' && soloNumeros.test(idBanda);
+      const nombreValid = nombreBanda !== '';
+      const anoValid = /^\d{4}$/.test(anoFormacion); // Año de formación debe tener 4 dígitos numéricos
+      const integrantesValid = integrantes !== '';
+      const cancionValid = cancionPopular !== '';
+      const generoValid = genero !== '';
+  
+      // Verificar si todos los campos requeridos están completos
+      if (idValid && nombreValid && anoValid && integrantesValid && cancionValid && generoValid) {
+        // Crear objeto con los datos del formulario
+        const formData = {
+          id_banda: idBanda,
+          nombreBanda: nombreBanda,
+          anoFormacion: anoFormacion,
+          integrantes: integrantes,
+          cancionPopular: cancionPopular,
+          genero: genero,
+          subgenero: subgenero,
+        };
+  
+        try {
+          // Realizar solicitud para crear el registro
+          const response = await fetch('/crear', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData) // Convertir los datos a formato JSON
+          });
+  
+          if (response.ok) {
+            // Mostrar alerta de éxito
+            showAlert(alertSuccess);
+          } else {
+            // Mostrar alerta de error
+            showAlert(alertError);
+          }
+        } catch (error) {
+          // Mostrar mensaje de error en la consola y en una alerta
+          console.error('Error en la solicitud:', error);
+          showAlert(alertError);
+        }
+      } else {
+        // Mostrar mensaje si algún campo requerido no está completo
+        alert('Por favor, completa todos los campos correctamente o verifica que el ID o el año esten correctos.');
+      }
+    });
+  
+    // Función para mostrar alertas y ocultarlas después de un tiempo determinado
+    function showAlert(alert) {
+      alert.classList.remove('d-none');
+      setTimeout(() => {
+        alert.classList.add('d-none');
+      }, 5000); // Ocultar el mensaje después de 5 segundos (puedes ajustar el tiempo)
+    }
+  </script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+</body>
+</html>

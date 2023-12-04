@@ -1,0 +1,105 @@
+/* Estilos personalizados */
+/* Estilos para la barra de navegación */
+#main-navbar.navbar {
+  background-color: hsl(316, 100%, 90%) !important; /* Color de fondo de la barra */
+}
+#main-navbar .navbar-brand {
+  font-size: 35px;
+  font-weight: bold;
+  color: #002467; /* Color del texto del brand */
+  margin-right: 15%; /* Para separar más la marca de los elementos */
+}
+
+#main-navbar .navbar-nav .nav-link {
+  font-size: 25px;
+  color: #0b256e; /* Color del texto de los enlaces */
+}
+
+/* Cambiar color al pasar el cursor sobre los elementos de la barra */
+#main-navbar .navbar-nav .nav-link:hover {
+  color: rgb(234, 86, 210); /* Color al pasar el cursor sobre los enlaces */
+  font-size: 27px;
+}
+#main-navbar .navbar-brand:hover {
+  color: #b131ad; /* Color del texto del brand al pasar el cursor sobre los enlaces */
+}
+#main-navbar .navbar-nav .nav-link.active,
+#main-navbar .navbar-nav .nav-link:active {
+  color: #b131ad; /* Cambia a un color diferente cuando el enlace está activo */
+  font-size: 27px;
+}
+body {
+    padding: 20px;
+    background-color: #c8e1ff;
+  }
+  #consultarBtn {
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-color: #b131ad;
+  }
+  
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  th {
+    background-color:#002467 !important;
+    color: #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  /* Estilos para los botones */
+  .btn-primary {
+    color: rgb(247, 184, 255); 
+    background-color: #b131ad;
+    border-color: rgb(162, 0, 255);
+  }
+  
+  .btn-primary:hover {
+    color: #b131ad;
+    background-color: rgb(247, 184, 255);
+    border-color: rgb(162, 0, 255);
+  }
+  /* Estilos para la barra de navegación */
+#main-navbar.navbar {
+  width: 100%; /* Ocupar todo el ancho disponible */
+  background-color: hsl(316, 100%, 90%) !important; /* Color de fondo de la barra */
+}
+
+/* Estilos para los formularios */
+.container-form {
+  max-width: 600px; /* Establecer un ancho máximo para los formularios */
+  margin: 0 auto; /* Centrar los formularios */
+}
+
+.form-title {
+  text-align: center; /* Centrar los títulos de los formularios */
+}
+
+.form-group {
+  text-align: center; /* Centrar los campos de los formularios */
+}
+
+/* Estilos para los botones */
+.btn {
+  display: block;
+  margin: 0 auto; /* Centrar los botones */
+}
+
+/* Otros estilos adicionales */
+body {
+  padding: 20px;
+  background-color: #c8e1ff;
+}
+
+/* Resto de estilos... */
